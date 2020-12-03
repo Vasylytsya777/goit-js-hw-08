@@ -2,12 +2,17 @@ import galery from "./gallery-items.js";
 // console.log(galery);
 
 const refs = {
-  galery: document.querySelector(".js-gallery"),
+  gallery: document.querySelector(".js-gallery"),
   jsLightbox: document.querySelector(".js-lightbox"),
   button: document.querySelector('button[data-action="close-lightbox"]'),
   lightboxImage: document.querySelector(".lightbox__image"),
   lightboxOverlay: document.querySelector(".lightbox__overlay"),
 };
+
+refs.gallery.insertAdjacentHTML("afterbegin", creteGalery(galery));
+refs.gallery.addEventListener("click", galeryOnClick);
+refs.button.addEventListener("click", closeOnButton);
+refs.lightboxOverlay.addEventListener("click", backDropOnClick);
 
 function creteGalery(galery) {
   const createImg = galery.reduce(
@@ -36,12 +41,12 @@ function openModal(largeImageURL, imageRef) {
   refs.lightboxImage.src = largeImageURL;
   refs.lightboxImage.alt = imageRef;
   refs.lightboxImage.dataset.index = imageRef.dataset.index;
-  Window.addEventListener("keydown", closeOnEsc);
+  window.addEventListener("keydown", closeOnEsc);
 }
 
 function closeModal() {
   refs.jsLightbox.classList.remove("is-open");
-  Window.addEventListener("keydown", closeOnEsc);
+  window.addEventListener("keydown", closeOnEsc);
 }
 
 function closeOnButton() {
@@ -62,8 +67,3 @@ function closeOnEsc(event) {
     refs.lightboxImage.alt = "";
   }
 }
-
-refs.galery.insertAdjacentHTML("afterbegin", creteGalery(galery));
-refs.galery.addEventListener("click", galeryOnClick);
-refs.button.addEventListener("click", closeOnButton);
-refs.lightboxOverlay.addEventListener("click", backDropOnClick);
