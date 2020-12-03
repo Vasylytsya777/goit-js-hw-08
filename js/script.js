@@ -11,13 +11,13 @@ const refs = {
 
 refs.gallery.insertAdjacentHTML("afterbegin", creteGalery(galery));
 refs.gallery.addEventListener("click", galeryOnClick);
-refs.button.addEventListener("click", closeOnButton);
-refs.lightboxOverlay.addEventListener("click", backDropOnClick);
 
 function creteGalery(galery) {
   const createImg = galery.reduce(
     (acc, { preview, original, description }, index) => {
-      acc += `<li class="gallery__item"> <a class="gallery__link" href=${original}> <img class="gallery__image" src=${preview} data-source=${original} alt=${description} data-index=${index}/> </a></li>`;
+      acc += `<li class="gallery__item"> <a class="gallery__link" href=${original}> 
+      <img class="gallery__image" src=${preview} data-source=${original} 
+      alt=${description} data-index=${index}/> </a></li>`;
       return acc;
     },
     ""
@@ -42,6 +42,8 @@ function openModal(largeImageURL, imageRef) {
   refs.lightboxImage.alt = imageRef;
   refs.lightboxImage.dataset.index = imageRef.dataset.index;
   window.addEventListener("keydown", closeOnEsc);
+  refs.button.addEventListener("click", closeOnButton);
+  refs.lightboxOverlay.addEventListener("click", backDropOnClick);
 }
 
 function closeModal() {
@@ -49,6 +51,8 @@ function closeModal() {
   refs.lightboxImage.src = "";
   refs.lightboxImage.alt = "";
   window.removeEventListener("keydown", closeOnEsc);
+  refs.button.removeEventListener("click", closeOnButton);
+  refs.lightboxOverlay.removeEventListener("click", backDropOnClick);
 }
 
 function closeOnButton() {
